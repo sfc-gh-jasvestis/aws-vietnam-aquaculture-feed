@@ -1,0 +1,50 @@
+-- ============================================================================
+-- 10_ALERTS_NOTIFICATIONS.SQL — Alerts for Feed Optimization
+-- ============================================================================
+USE DATABASE AQUACULTURE_FEED;
+USE SCHEMA APP;
+
+-- Notification integration (email)
+CREATE OR REPLACE NOTIFICATION INTEGRATION aws_vietnam_aquaculture_feed_EMAIL_INT
+  TYPE = EMAIL
+  ENABLED = TRUE
+  ALLOWED_RECIPIENTS = ('jonathan.asvestis@snowflake.com');
+
+-- Alert: PERFORMANCE_ALERT
+CREATE OR REPLACE ALERT APP.PERFORMANCE_ALERT
+  WAREHOUSE = AQUACULTURE_WH
+  SCHEDULE = '5 MINUTE'
+  COMMENT = 'Feed Optimization performance below threshold'
+IF (EXISTS (
+  SELECT 1 FROM CURATED.PERFORMANCE_DASHBOARD
+  WHERE 1=1 -- Condition: Key metric below threshold
+))
+THEN
+  CALL SYSTEM$SEND_EMAIL(
+    'aws_vietnam_aquaculture_feed_EMAIL_INT',
+    'jonathan.asvestis@snowflake.com',
+    '[ALERT] Feed Optimization: Feed Optimization performance below threshold',
+    'Feed Optimization performance below threshold'
+  );
+
+ALTER ALERT APP.PERFORMANCE_ALERT RESUME;
+
+-- Alert: ANOMALY_ALERT
+CREATE OR REPLACE ALERT APP.ANOMALY_ALERT
+  WAREHOUSE = AQUACULTURE_WH
+  SCHEDULE = '5 MINUTE'
+  COMMENT = 'Anomalous pattern detected'
+IF (EXISTS (
+  SELECT 1 FROM CURATED.PERFORMANCE_DASHBOARD
+  WHERE 1=1 -- Condition: ML detects anomaly
+))
+THEN
+  CALL SYSTEM$SEND_EMAIL(
+    'aws_vietnam_aquaculture_feed_EMAIL_INT',
+    'jonathan.asvestis@snowflake.com',
+    '[ALERT] Feed Optimization: Anomalous pattern detected',
+    'Anomalous pattern detected'
+  );
+
+ALTER ALERT APP.ANOMALY_ALERT RESUME;
+
