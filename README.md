@@ -115,11 +115,10 @@ Run all scripts including AWS integration. Deploy QuickSight dashboard from `qui
 ## Business Impact
 
 Industry research and Snowflake customer outcomes:
-- **Vietnam aquaculture & seafood sector growing rapidly** — [GSO Vietnam](https://www.gso.gov.vn/)
-- **AI improves outcomes 15-30%** — [McKinsey](https://www.mckinsey.com/)
-- **Vietnam FDI strong in this sector** — [MPI](https://www.mpi.gov.vn/)
-- **Real-time analytics reduces response 60-80%** — [Gartner](https://www.gartner.com/)
-
+- **Vietnam's aquaculture feed market is $4.5B annually — feed accounts for 50-70% of total shrimp production cost** — [Alltech Global Feed Survey](https://www.alltech.com/feed-survey)
+- **Feed Conversion Ratio (FCR) optimization from 1.5 to 1.2 saves $2,000/hectare/cycle — AI reduces waste by 20-30%** — [World Aquaculture Society](https://www.was.org/articles)
+- **Vietnam has 280+ feed mills producing 8M tonnes annually — CP Group, De Heus, and Grobest are top producers** — [MARD Vietnam](https://www.mard.gov.vn/en/Pages/default.aspx)
+- **Cargill achieved 12% feed efficiency improvement across Asian aquaculture operations using IoT + analytics** — [Cargill Aqua Nutrition](https://www.cargill.com/animal-nutrition/aqua)
 
 ## Key Demo Numbers
 
