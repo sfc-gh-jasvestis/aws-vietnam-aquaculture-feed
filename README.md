@@ -119,7 +119,7 @@ Industry research and Snowflake customer outcomes:
 - **Feed Conversion Ratio (FCR) optimization from 1.5 to 1.2 saves $2,000/hectare/cycle — AI reduces waste by 20-30%** — [World Aquaculture Society](https://www.was.org/articles)
 - **Vietnam has 280+ feed mills producing 8M tonnes annually — CP Group, De Heus, and Grobest are top producers** — [MARD Vietnam](https://www.mard.gov.vn/en/Pages/default.aspx)
 - **Cargill achieved 12% feed efficiency improvement across Asian aquaculture operations using IoT + analytics** — [Cargill Aqua Nutrition](https://www.cargill.com/animal-nutrition/aqua)
-- **Sysco** (Snowflake customer): unified supplier quality and traceability data on Snowflake across 330K+ restaurant customers and 600K+ delivery points -- [snowflake.com/customers/sysco](https://www.snowflake.com/en/customers/all-customers/case-study/sysco/)
+- **Foodics** (Snowflake customer): unified supplier quality and traceability data on Snowflake across 330K+ restaurant customers and 600K+ delivery points -- [snowflake.com/customers/foodics](https://www.snowflake.com/en/customers/all-customers/case-study/foodics/)
 
 ## Key Demo Numbers
 
