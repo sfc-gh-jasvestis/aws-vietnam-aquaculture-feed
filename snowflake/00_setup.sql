@@ -1,16 +1,13 @@
--- ============================================================================
--- Feed Optimization
--- Feed Optimization for Vietnam - ML.FORECAST and Dynamic Tables power real-time feed optimization intelligence for aquaculture & seafood in An Giang & Dong Thap.
--- ============================================================================
-USE ROLE ACCOUNTADMIN;
-CREATE DATABASE IF NOT EXISTS AQUACULTURE_FEED;
-CREATE WAREHOUSE IF NOT EXISTS AQUACULTURE_WH WAREHOUSE_SIZE = 'MEDIUM' AUTO_SUSPEND = 120 AUTO_RESUME = TRUE;
-USE DATABASE AQUACULTURE_FEED;
-CREATE SCHEMA IF NOT EXISTS RAW;
-CREATE SCHEMA IF NOT EXISTS CURATED;
-CREATE SCHEMA IF NOT EXISTS ML;
-CREATE SCHEMA IF NOT EXISTS AI;
-CREATE SCHEMA IF NOT EXISTS SEARCH;
-CREATE SCHEMA IF NOT EXISTS APP;
+-- Generated from generator/demo_specs/aws-vietnam-aquaculture-feed.json
+-- Regenerate with: python3 generator/gen_repo_docs.py aws-vietnam-aquaculture-feed
+-- This is the schema that is actually deployed for VIETNAM_AQUACULTURE_FEED.
 
-USE WAREHOUSE AQUACULTURE_WH;
+-- VIETNAM_AQUACULTURE_FEED  (Feed Optimization)
+-- generated from generator/demo_specs/aws-vietnam-aquaculture-feed.json - do not hand-edit
+CREATE DATABASE IF NOT EXISTS VIETNAM_AQUACULTURE_FEED;
+CREATE SCHEMA IF NOT EXISTS VIETNAM_AQUACULTURE_FEED.RAW;
+CREATE SCHEMA IF NOT EXISTS VIETNAM_AQUACULTURE_FEED.CURATED;
+CREATE SCHEMA IF NOT EXISTS VIETNAM_AQUACULTURE_FEED.APP;
+USE DATABASE VIETNAM_AQUACULTURE_FEED;
+
+-- 5 real regions; entity names carry their region so the two always agree
