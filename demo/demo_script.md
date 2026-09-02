@@ -21,8 +21,8 @@ Snowflake delivers feed optimization intelligence for Vietnamese aquaculture & s
 | Database | `VIETNAM_AQUACULTURE_FEED` |
 | Service | `VIETNAM_AQUACULTURE_FEED_APP` |
 | Compute pool | `SEA_DEMOS_VIETNAM_POOL` |
-| Dimension table | `RAW.DOCUMENTS` (20 rows) |
-| Fact table | `RAW.METRICS` (250,000 rows, 90 days) |
+| Dimension table | `RAW.PONDS` (20 rows) |
+| Fact table | `RAW.FEED_EVENTS` (250,000 rows, 90 days) |
 | Curated layer | `CURATED.PERFORMANCE_SUMMARY`, `CURATED.TREND_ANALYSIS`, `CURATED.KPI_SUMMARY` |
 | Currency | VND (₫) |
 
@@ -42,10 +42,10 @@ original literal as a fallback, so it still renders if Snowflake is unreachable.
 
 | Card | Value | Backed by |
 |---|---|---|
-| Feed Produced (MTD) | `124K MT` | total across Documents |
+| Feed Produced (MTD) | `124K MT` | total across Ponds |
 | FCR (Avg) | `1.42` | average per event |
-| Raw Material Cost | `₫847B` | total across Documents |
-| Farms Supplied | `4,200` | total across Documents |
+| Raw Material Cost | `₫847B` | total across Ponds |
+| Farms Supplied | `4,200` | total across Ponds |
 | Protein Content | `32%` | average per event |
 | Omega-3 Level | `2.4%` | average per event |
 | Pellet Durability | `97%` | average per event |
