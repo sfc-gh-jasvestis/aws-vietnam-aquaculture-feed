@@ -32,15 +32,22 @@ export default function HomePage() {
       .catch(() => {});
   }, []);
 
+
+  // KPI values come from /api/data, which reads CURATED.KPI_SUMMARY. The literal
+  // stays as a fallback so the card still renders if the API is unavailable.
+  const kpiVal = (title: string, fallback: string): string =>
+    (data?.kpiCards as { title: string; value: string }[] | undefined)
+      ?.find((k) => k.title === title)?.value ?? fallback;
+
   const title = narrative?.title || 'SEA AWS Demo';
 
   const executiveCockpit = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KPICard title="Feed Produced (MTD)" value="124K MT" status="neutral" />
-        <KPICard title="FCR (Avg)" value="1.42" status="neutral" />
-        <KPICard title="Raw Material Cost" value="₫847B" status="warning" />
-        <KPICard title="Farms Supplied" value="4,200" status="neutral" />
+        <KPICard title="Feed Produced (MTD)" value={kpiVal('Feed Produced (MTD)', '124K MT')} status="neutral" />
+        <KPICard title="FCR (Avg)" value={kpiVal('FCR (Avg)', '1.42')} status="neutral" />
+        <KPICard title="Raw Material Cost" value={kpiVal('Raw Material Cost', '₫847B')} status="warning" />
+        <KPICard title="Farms Supplied" value={kpiVal('Farms Supplied', '4,200')} status="neutral" />
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="lg:col-span-1">
@@ -87,9 +94,9 @@ export default function HomePage() {
   const domainTab1 = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <KPICard title="Protein Content" value="32%" />
-        <KPICard title="Omega-3 Level" value="2.4%" />
-        <KPICard title="Pellet Durability" value="97%" />
+        <KPICard title="Protein Content" value={kpiVal('Protein Content', '32%')} />
+        <KPICard title="Omega-3 Level" value={kpiVal('Omega-3 Level', '2.4%')} />
+        <KPICard title="Pellet Durability" value={kpiVal('Pellet Durability', '97%')} />
       </div>
       <Chart
         data={data?.detail || [{ x: 'Mon', y: 24 }, { x: 'Tue', y: 28 }, { x: 'Wed', y: 22 }, { x: 'Thu', y: 31 }, { x: 'Fri', y: 26 }, { x: 'Sat', y: 19 }, { x: 'Sun', y: 23 }]}
