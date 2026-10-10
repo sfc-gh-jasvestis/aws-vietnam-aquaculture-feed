@@ -1,0 +1,142 @@
+{
+  "title": "Vietnam Aquaculture Feed",
+  "duration": "6 minutes",
+  "thesis": "A fictional Vietnamese aquaculture grower runs pond feeding on Snowflake: curated dynamic tables turn daily pond observations into feed uptake, feed-refusal, feed efficiency and auto-feeder KPIs, Snowflake ML ranks next-week feed-refusal risk, and Cortex answers questions with SQL and SOP citations.",
+  "tabs": [
+    {
+      "id": "executive-cockpit",
+      "persona": {
+        "name": "Tran Minh Chau",
+        "role": "Head of Feed Operations (fictional)",
+        "avatar": ""
+      },
+      "talking_points": [
+        "Thirty synthetic pangasius, shrimp, tilapia and prawn ponds near Can Tho, Long Xuyen, Ca Mau and Soc Trang, with one set of KPIs: feed uptake rate, feed-refusal events, feed efficiency and tonnes of feed dispensed.",
+        "Each KPI is computed as an explicit numerator and denominator in a dynamic table, so any figure drills back to pond-day rows. Rations and thresholds are demo settings, not aquaculture guidance.",
+        "The cause chart ranks feed-refusal causes by the feed trays they leave uncleared."
+      ],
+      "show": [
+        "KPI cards",
+        "Daily feed uptake rate",
+        "Uncleared trays by cause",
+        "Pond table"
+      ],
+      "call_out": "Feed KPIs the whole team can trace to source",
+      "transition": {
+        "next_tab": "predictive",
+        "line": "Which ponds are most likely to stop taking feed next?"
+      }
+    },
+    {
+      "id": "predictive",
+      "persona": {
+        "name": "Le Van Phuc",
+        "role": "Pond Feed Technician (fictional)",
+        "avatar": ""
+      },
+      "talking_points": [
+        "A Snowflake ML classification model estimates, per pond, the chance of a feed-refusal event within 7 days.",
+        "Its holdout line reports precision and recall on the latest labelled days next to the base rate, so the audience sees how good it really is.",
+        "Anomaly detection picks out unusual uneaten-feed days, and a forecast projects the grower's daily feed demand 14 days ahead."
+      ],
+      "show": [
+        "Holdout metrics",
+        "Risk by pond",
+        "Feed demand forecast",
+        "Uneaten feed anomalies"
+      ],
+      "call_out": "Measured ML that runs where the data lives",
+      "transition": {
+        "next_tab": "planning",
+        "line": "Can we trust the pond data behind these scores?"
+      }
+    },
+    {
+      "id": "planning",
+      "persona": {
+        "name": "Le Van Phuc",
+        "role": "Pond Feed Technician (fictional)",
+        "avatar": ""
+      },
+      "talking_points": [
+        "Auto-feeder uptime and auto-feeder coverage show how much of each farm is fed and observed automatically.",
+        "Plotting ration review completion against feed uptake rate per pond shows where the two move together; treat it as a correlation, not a cause.",
+        "The action memo proposes three prioritised actions, drawn only from the KPI, feed-refusal, cause and risk tables."
+      ],
+      "show": [
+        "Auto-feeder uptime and coverage",
+        "Ration review completion vs feed uptake rate",
+        "Action memo"
+      ],
+      "call_out": "Draft actions grounded in data, approved by people",
+      "transition": {
+        "next_tab": "live",
+        "line": "What if a pond feeding sensor alarms during the meeting?"
+      }
+    },
+    {
+      "id": "live",
+      "persona": {
+        "name": "Le Van Phuc",
+        "role": "Pond Feed Technician (fictional)",
+        "avatar": ""
+      },
+      "talking_points": [
+        "Uneaten feed and feeder hopper level readings arrive in RAW.LIVE_TELEMETRY, either from the built-in simulator or from AWS IoT Core via S3 and Snowpipe.",
+        "A Snowflake alert records each ALARM reading with an SOP hint and the pond's risk band, and emails the feed technician on duty."
+      ],
+      "show": [
+        "Messages loaded and lag",
+        "Latest readings",
+        "Alert log"
+      ],
+      "call_out": "Feeder alarm to technician email on one platform",
+      "transition": {
+        "next_tab": "ask-ai",
+        "line": "Let's ask the data in plain language."
+      }
+    },
+    {
+      "id": "ask-ai",
+      "persona": {
+        "name": "Tran Minh Chau",
+        "role": "Head of Feed Operations (fictional)",
+        "avatar": ""
+      },
+      "talking_points": [
+        "The Cortex Agent combines Cortex Analyst on the semantic view for numbers with Cortex Search on synthetic feed-refusal SOPs for procedures.",
+        "Every answer displays the SQL it ran and the SOP IDs it cited."
+      ],
+      "show": [
+        "Ask a sample question",
+        "Generated SQL",
+        "SOP citations"
+      ],
+      "call_out": "Answers you can check line by line",
+      "transition": {
+        "next_tab": "architecture",
+        "line": "And this is the build behind it."
+      }
+    },
+    {
+      "id": "architecture",
+      "persona": {
+        "name": "Tran Minh Chau",
+        "role": "Head of Feed Operations (fictional)",
+        "avatar": ""
+      },
+      "talking_points": [
+        "One shared core supports two builds: Snowflake only, or AWS + Snowflake with IoT Core, Bedrock, QuickSight and Amazon Q.",
+        "All data is synthetic and regenerated identically from the repository."
+      ],
+      "show": [
+        "Both architecture diagrams"
+      ],
+      "call_out": "A governed Snowflake core with an optional AWS edge",
+      "transition": {
+        "next_tab": "",
+        "line": "Questions?"
+      }
+    }
+  ]
+}

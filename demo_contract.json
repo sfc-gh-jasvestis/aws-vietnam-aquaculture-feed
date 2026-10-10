@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "repo": "aws-vietnam-aquaculture-feed",
+  "operation": "on-demand",
+  "data_classification": "synthetic demonstration only",
+  "currency": "USD",
+  "grains": {
+    "RAW.PONDS": "one row per aquaculture pond",
+    "RAW.POND_DAILY": "one row per pond per day (90 days)",
+    "RAW.FEEDER_COVERAGE": "one row per pond (auto-feeder coverage snapshot)",
+    "CURATED.PERFORMANCE_SUMMARY": "one row per pond",
+    "CURATED.TREND_ANALYSIS": "one row per day",
+    "CURATED.FEED_REFUSAL_CAUSES": "one row per root cause",
+    "CURATED.KPI_SUMMARY": "one row per KPI",
+    "ML.FEED_REFUSAL_RISK_SCORES": "one row per pond (latest day)"
+  },
+  "metrics": {
+    "Feed Uptake Rate": "100 * SUM(TRAYS_CLEARED) / SUM(TRAYS_CHECKED)",
+    "Feed-Refusal Events": "SUM(FEED_REFUSAL_COUNT)",
+    "Feed Efficiency": "SUM(BIOMASS_GAIN_KG) / SUM(FEED_TONNES) (kg biomass gain per tonne of feed)",
+    "Feed Dispensed (t)": "SUM(FEED_TONNES)",
+    "Auto-Feeder Uptime": "100 * SUM(OPERATING_HOURS) / SUM(PLANNED_HOURS)",
+    "Ponds Monitored": "COUNT(RAW.PONDS)",
+    "Auto-Feeder Coverage": "100 * SUM(LEAST(AUTOFEEDER_HA, POND_HA)) / SUM(POND_HA)",
+    "Low-Oxygen Alerts": "SUM(LOW_DO_ALERTS)"
+  },
+  "chart_bindings": {
+    "daily_feed_uptake_rate": [
+      "CURATED.TREND_ANALYSIS.METRIC_DATE",
+      "UPTAKE_PCT"
+    ],
+    "uncleared_trays_by_cause": [
+      "CURATED.FEED_REFUSAL_CAUSES.ROOT_CAUSE",
+      "UNCLEARED_TRAYS"
+    ],
+    "ration_reviews_vs_feed_uptake_rate": [
+      "CURATED.PERFORMANCE_SUMMARY.RATION_REVIEW_COMPLETION_PCT",
+      "UPTAKE_PCT"
+    ],
+    "quicksight_feed_refusal_risk": [
+      "ENTITY_ID",
+      "MAX(FEED_REFUSAL_PROB_7D)"
+    ]
+  },
+  "freshness": "MAX(EVENT_DATE) is an observation watermark; requestedAt is not freshness",
+  "required_capabilities": {
+    "core_pipeline": "Curated KPIs reconcile to a RAW recomputation (run_core.py checks this on every build)",
+    "feed_refusal_risk_model": "Snowflake ML CLASSIFICATION of P(feed-refusal event in next 7 days) per pond, evaluated on an out-of-time holdout",
+    "forecast_and_anomaly": "14-day grower-wide feed demand FORECAST; uneaten feed ANOMALY_DETECTION (train 75 days, detect last 15)",
+    "search": "Cortex Search SEARCH.FEED_SOP_SEARCH over synthetic feed-refusal response SOPs (one per species and cause)",
+    "semantic_analytics": "Semantic view APP.FEED_ANALYTICS and Cortex Agent APP.FEED_AGENT using analyst + search tools",
+    "grounded_ai": "Agent answers return generated SQL and SOP citations; the action memo uses only KPI, feed-refusal, cause and risk rows",
+    "quicksight": "DIRECT_QUERY dashboard (ponds with observations, daily feed uptake rate, feed-refusal events by pond, feed-refusal risk, IoT message count) through a read-only Snowflake service user",
+    "quicksight_q": "Amazon Q topic over the curated datasets for natural-language questions",
+    "aws_ingestion": "IoT Core rule -> S3 -> Snowpipe AUTO_INGEST into RAW.LIVE_TELEMETRY",
+    "notifications": "APP.LIVE_ALARM_ALERT logs new ALARM readings to APP.ALERT_LOG and emails via SYSTEM$SEND_EMAIL; alert and tasks suspended between demos",
+    "orchestration": "Task graph APP.TASK_REFRESH_CURATED -> APP.TASK_RESCORE_RISK run on demand (EXECUTE TASK)",
+    "app_deployment": "SPCS service APP.VN_AQUACULTURE_FEED_APP; routes /api/data, /api/ask, /api/agent"
+  },
+  "builds": {
+    "snowflake": {
+      "database": "VIETNAM_AQUACULTURE_FEED_SNOWFLAKE",
+      "app_setting": "DEMO_PLATFORM=snowflake",
+      "live_telemetry": "APP.SIMULATE_TELEMETRY(n)",
+      "memo": "Cortex AI_COMPLETE (claude-sonnet-4-5)"
+    },
+    "aws": {
+      "database": "VIETNAM_AQUACULTURE_FEED_AWS",
+      "app_setting": "DEMO_PLATFORM=aws",
+      "live_telemetry": "AWS IoT Core -> S3 -> Snowpipe",
+      "memo": "Amazon Bedrock Claude Sonnet 4.5 via APP.BEDROCK_GENERATE",
+      "capabilities": "see required_capabilities"
+    }
+  }
+}
